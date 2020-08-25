@@ -11,10 +11,11 @@ steps:
     password:
       from_secret: docker_password
     repo: jtbarclay/drone-kubernetes
-    tags: ["arm", "latest"]
+    tags: ["arm"]
 
 node_selector:
   kubernetes.io/arch: arm
+
 ---
 kind: pipeline
 type: kubernetes
@@ -32,7 +33,32 @@ steps:
     password:
       from_secret: docker_password
     repo: jtbarclay/drone-kubernetes
-    tags: ["arm64", "latest"]
+    tags: ["arm64"]
+
+node_selector:
+  kubernetes.io/arch: arm64
+
+---
+kind: pipeline
+type: kubernetes
+name: manifest
+
+steps:
+- name: manifest
+  image: plugins/manifest
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    target: jtbarclay/drone-kubernetes
+    platforms:
+      - linux/arm
+      - linux/arm64
+
+depends_on:
+- pi3-kube
+- pi4-kube
 
 node_selector:
   kubernetes.io/arch: arm64
