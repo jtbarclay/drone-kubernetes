@@ -1,22 +1,22 @@
-kind: pipeline
-type: kubernetes
-name: pi3-kube
+# kind: pipeline
+# type: kubernetes
+# name: pi3-kube
 
-steps:
-- name: publish
-  image: plugins/docker
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    repo: jtbarclay/drone-kubernetes
-    tags: ["arm"]
+# steps:
+# - name: publish
+#   image: plugins/docker
+#   settings:
+#     username:
+#       from_secret: docker_username
+#     password:
+#       from_secret: docker_password
+#     repo: jtbarclay/drone-kubernetes
+#     tags: ["arm"]
 
-node_selector:
-  kubernetes.io/arch: arm
+# node_selector:
+#   kubernetes.io/arch: arm
 
----
+# ---
 kind: pipeline
 type: kubernetes
 name: pi4-kube
@@ -38,28 +38,28 @@ steps:
 node_selector:
   kubernetes.io/arch: arm64
 
----
-kind: pipeline
-type: kubernetes
-name: manifest
+# ---
+# kind: pipeline
+# type: kubernetes
+# name: manifest
 
-steps:
-- name: manifest
-  image: plugins/manifest
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    target: jtbarclay/drone-kubernetes:latest
-    template: jtbarclay/drone-kubernetes:ARCH
-    platforms:
-      - linux/arm
-      - linux/arm64
+# steps:
+# - name: manifest
+#   image: plugins/manifest
+#   settings:
+#     username:
+#       from_secret: docker_username
+#     password:
+#       from_secret: docker_password
+#     target: jtbarclay/drone-kubernetes:latest
+#     template: jtbarclay/drone-kubernetes:ARCH
+#     platforms:
+#       - linux/arm
+#       - linux/arm64
 
-depends_on:
-- pi3-kube
-- pi4-kube
+# depends_on:
+# - pi3-kube
+# - pi4-kube
 
-node_selector:
-  kubernetes.io/arch: arm64
+# node_selector:
+#   kubernetes.io/arch: arm64
