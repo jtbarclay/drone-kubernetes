@@ -1,9 +1,6 @@
 kind: pipeline
 type: kubernetes
-name: p3-kube
-
-platform:
-  arch: arm
+name: pi3-kube
 
 steps:
 - name: publish
@@ -15,6 +12,9 @@ steps:
       from_secret: docker_password
     repo: jtbarclay/drone-kubernetes
     tags: ["arm", "latest"]
+
+node_selector:
+  kubernetes.io/arch: arm
 ---
 kind: pipeline
 type: kubernetes
@@ -33,3 +33,6 @@ steps:
       from_secret: docker_password
     repo: jtbarclay/drone-kubernetes
     tags: ["arm64", "latest"]
+
+node_selector:
+  kubernetes.io/arch: arm64
