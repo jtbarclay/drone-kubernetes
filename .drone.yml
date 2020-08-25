@@ -51,7 +51,8 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
-    target: jtbarclay/drone-kubernetes
+    target: jtbarclay/drone-kubernetes:latest
+    template: jtbarclay/drone-kubernetes:ARCH
     platforms:
       - linux/arm
       - linux/arm64
